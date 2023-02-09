@@ -32,4 +32,5 @@ public class LoginBlock extends BaseBlock {
 
     @FindBy (xpath = "//button[@id='login-otp-button']")
     public WebElement smsButton;
+
 }

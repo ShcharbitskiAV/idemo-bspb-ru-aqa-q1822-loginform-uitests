@@ -8,10 +8,12 @@ public class LoginPage extends BasePage {
     private LoginBlock loginBlock = new LoginBlock(driver);
 
     public LoginPage (WebDriver driver) {
+
         super(driver);
     }
 
     public LoginBlock getLoginBlock() {
+
         return loginBlock;
     }
 }

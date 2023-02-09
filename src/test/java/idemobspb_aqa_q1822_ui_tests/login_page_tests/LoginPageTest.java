@@ -5,6 +5,8 @@ import idemobspb_aqa_q1822_ui_tests.service.LoginService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -12,15 +14,19 @@ import java.time.Duration;
 
 public class LoginPageTest extends BaseUITestsClass {
 
+
     private LoginService loginService;
 
     @BeforeEach
-    public void openLoginPage () throws InterruptedException {
+    public void openLoginPage() throws InterruptedException {
+
+        driver.manage().window().maximize();
+
         driver.get("https://idemo.bspb.ru/");
     }
 
     @Test
-    public void verifyLoginInputVisibility () {
+    public void verifyLoginInputVisibility() {
         //Given
         loginService = new LoginService(driver);
 
@@ -30,7 +36,7 @@ public class LoginPageTest extends BaseUITestsClass {
     }
 
     @Test
-    public void verifyLoginInputValidParameters () {
+    public void verifyLoginInputValidParameters() {
         //Given
         String initialWrongLoginString = "demo";
         String initialPassword = "demo";
@@ -53,12 +59,15 @@ public class LoginPageTest extends BaseUITestsClass {
     }
 
     @Test
-    public void verifyLoginInputInvalidParameters () {
+    public void verifyLoginInputInvalidParameters() {
         //Given
-        String initialWrongLoginString = "qwerty";
-        String initialPassword = "12345";
-        String expectedErrormessage = "Пожалуйста, повторите попытку.";
+        String initialWrongLoginString = "incorrect";
+        String initialPassword = "1234";
+        String expectedErrormessage = "Неверные данные пользователя (осталось 2 попытки)";
+
         loginService = new LoginService(driver);
+        loginService.getLoginPage().getLoginBlock().loginField.clear();
+        loginService.getLoginPage().getLoginBlock().passwordField.clear();
         loginService.getLoginPage().getLoginBlock().loginField.sendKeys(initialWrongLoginString);
         loginService.getLoginPage().getLoginBlock().passwordField.sendKeys(initialPassword);
 
@@ -70,7 +79,66 @@ public class LoginPageTest extends BaseUITestsClass {
         wait.until(ExpectedConditions.visibilityOfElementLocated(loginService.getLoginPage().getLoginBlock().errorMessageBy));
 
         String actualErrorMessageText = loginService.getLoginPage().getLoginBlock().errorMessage.getText();
-        //Assertions.assertEquals(expectedErrormessage, actualErrorMessageText);
+        Assertions.assertEquals(expectedErrormessage, actualErrorMessageText);
+    }
+
+    @Test
+    public void checkExitFromPage() {
+
+        verifyLoginInputValidParameters();
+
+        WebElement exitButton = driver.findElement(By.xpath("//span[@class='icon-close']"));
+
+        exitButton.click();
+
+    }
+
+    @Test
+    public void verifyRecoveryButton() {
+
+        WebElement recoveryButton = driver.findElement(By.xpath("//a[@class='chevron']"));
+        recoveryButton.click();
+
+    }
+
+    @Test
+    public void verifyButtonShowPassword() {
+
+        WebElement buttonShowPassword = driver.findElement(By.xpath("//div[@class='eye-icon-wrapper-web on']"));
+        buttonShowPassword.click();
+
+        WebElement buttonShowPasswordOff = driver.findElement(By.xpath("//div[@class='eye-icon-wrapper-web off']"));
+        buttonShowPasswordOff.click();
+
+    }
+
+    @Test
+    public void verifyButtonInEnglish() {
+
+        WebElement buttonInEnglish = driver.findElement(By.xpath("//a[@class='chevron locale inline-block']"));
+        buttonInEnglish.click();
+
+    }
+
+    @Test
+    public void verifyButtonAboutUs() {
+
+        WebElement buttonInEnglish = driver.findElement(By.xpath("//a[@class='chevron inline-block']"));
+        buttonInEnglish.click();
+
+    }
+
+    @Test
+    public void checkOpenPageForChangePassword() {
+
+        verifyLoginInputValidParameters();
+
+        WebElement buttonSettings = driver.findElement(By.xpath("//span[@class='icon-cog']"));
+        buttonSettings.click();
+
+//        WebElement buttonChangePassword = driver.findElement(By.xpath("//i[text()='Изменить пароль']"));
+//        buttonChangePassword.click();
+
     }
 
 

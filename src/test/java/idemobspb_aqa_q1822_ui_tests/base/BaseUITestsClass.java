@@ -15,7 +15,7 @@ public class BaseUITestsClass {
 
     @BeforeAll
     public void prepareWebDriver () {
-        System.setProperty("webdriver.chrome.driver", "C:\\testing\\idemo-bspb-ru-aqa-q1822-ui-tests\\idemobspb-aqa-q1822-ui-tests\\src\\test\\resources\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "C:\\Q1822\\idemo-bspb-ru-aqa-q1822-ui-tests\\src\\test\\resources\\chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(5000));
     }
