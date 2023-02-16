@@ -16,7 +16,7 @@ public class LoginPage extends BasePage {
 
     public LoginBlock getLoginBlock() {
         Logger log = LoggerFactory.getLogger(LoginPage.class);
-        log.info("hehreghe");
+        log.info("ho-ho-ho");
 
         return loginBlock;
     }
