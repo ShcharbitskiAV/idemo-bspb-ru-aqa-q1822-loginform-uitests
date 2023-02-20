@@ -8,8 +8,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.time.Duration;
 
-
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+
 public class BaseUITestsClass {
     protected WebDriver driver;
 
